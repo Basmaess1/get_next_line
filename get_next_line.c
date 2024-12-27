@@ -6,7 +6,7 @@
 /*   By: bessabri <bessabri@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:24:18 by bessabri          #+#    #+#             */
-/*   Updated: 2024/12/22 23:49:47 by bessabri         ###   ########.fr       */
+/*   Updated: 2024/12/28 00:18:24 by bessabri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,22 @@ size_t	ft_strlen(const char *s)
 }
 char *read_function(int fd, char *res)
 {
-    ssize_t n;
+    ssize_t	n;
     char    *buffer;
     
     buffer = malloc(BUFFER_SIZE + 1);
     if(!buffer)
         return (0);
-
-    while (!ft_strchr(res,'\n') && n > 0)
+    while (!ft_strchr(res,'\n'))
     {
-
         n = read(fd, buffer,BUFFER_SIZE);
+        if (n == -1)
+        {
+            free(buffer);
+            return (NULL);
+        }
+	if (n == 0)
+		break;
         buffer[n]='\0';
         res = ft_strjoin(res,buffer);
     }
@@ -45,19 +50,17 @@ char *read_function(int fd, char *res)
 
 char    *handle_newline(char *res)
 {
-    char    *newline;
-    int i;
+    char	*newline;
+    int		i;
 
     i = 0;
     while (res[i] && res[i]!= '\n')
         i++;
-    //if (res[i] == '\n')
-    //    i++;
-    newline = malloc(i + 1);
+    newline = malloc(i + 2);
     if (!newline)
     return (0);
     i = 0;
-    while (res[i] && res[i]!= '\n')
+    while (res[i] && res[i] != '\n')
     {
         newline[i] = res[i];
         i++;
@@ -68,7 +71,6 @@ char    *handle_newline(char *res)
         i++;
     }
     newline[i] = '\0';
-    free(res);
     return (newline);    
 }
 char    *achb9a(char *res)
@@ -79,56 +81,60 @@ char    *achb9a(char *res)
     char    *lib9a;
 
     i = 0;
-    j = 0;
     while (res[i] && res[i]!= '\n')
         i++;
     if (res[i] == '\0' || res[i + 1] == '\0')
-        return NULL;
-
+    {
+        free(res);
+        return (0);
+    }
     total_size = ft_strlen(res);
     lib9a = malloc(total_size - i + 1);
     if (!lib9a)
+    {
+        free(res);
         return (0);
+    }
     i++;
+    j = 0;
     while (res[i])
     {
         lib9a[j] = res[i];
         i++;
         j++;
     }
-    free(res);
     lib9a[j] = '\0';
+    free(res);
     return (lib9a);
 }
 char *get_next_line(int fd)
 {
     static char *s;
     char    *line;
-    s = read_function(fd,s);
-    if (!s)
-        return (NULL);
-    line = handle_newline(s);
-    s =achb9a(s);
-    return (line);
 
+    if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+    s = read_function(fd,s);
+    if (!s || s[0] == '\0')
+    {
+	    free(s);
+	    return (NULL);
+    }
+    line = handle_newline(s);
+    s = achb9a(s);
+    return (line);
 }
 int main()
 {
     int fd;
     char *res2;
     fd = open("file.txt",O_RDONLY);
-    if (fd < 0)
-    {
-        perror("Error opening file");
-        return (1);
-    }
     while ((res2 = get_next_line(fd)) != NULL)
     {
     	printf("%s",res2);
     }
 
-    close (fd);
-    
+    close (fd);    
 }
     // if (!s)
     // {

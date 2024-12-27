@@ -6,7 +6,7 @@
 /*   By: bessabri <bessabri@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:25:27 by bessabri          #+#    #+#             */
-/*   Updated: 2024/12/22 23:12:06 by bessabri         ###   ########.fr       */
+/*   Updated: 2024/12/27 22:08:09 by bessabri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include <fcntl.h> 
 #include <unistd.h>
 #ifndef BUFFER_SIZE
-#define BUFFER_SIZE 4
+#define BUFFER_SIZE 1024
 #endif
 
 char    *get_next_line(int fd);
