@@ -27,4 +27,6 @@ char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*achb9a(char *res);
+char	*handle_newline(char *res);
+char	*read_function(int fd, char *res);
 #endif
