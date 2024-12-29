@@ -116,31 +116,4 @@ char	*get_next_line(int fd)
 	s[fd] = achb9a(s[fd]);
 	return (line);
 }
-// int main() {
-//     int fd1 = open("file1.txt", O_RDONLY);
-//     int fd2 = open("file2.txt", O_RDONLY);
-// 	int fd3 = open("file3.txt", O_RDONLY);
-// 	if (fd1 < 0 || fd2 < 0 || fd3 < 0)
-// 	{
-// 	perror("Error opening file");
-// 	return 1;
-// 	}
-//     char *line;
 
-//     while ((line = get_next_line(fd1))) {
-//         printf("%s",line);
-//         free(line);
-//     }
-//     while ((line = get_next_line(fd2))) {
-//         printf("%s",line);
-//         free(line);
-//     }
-// 	    while ((line = get_next_line(fd3))) {
-//         printf("%s",line);
-//         free(line);
-//     }
-//     close(fd1);
-//     close(fd2);
-// 	close(fd3);
-//     return 0;
-// }
