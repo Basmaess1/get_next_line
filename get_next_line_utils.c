@@ -6,7 +6,7 @@
 /*   By: bessabri <bessabri@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 21:08:41 by bessabri          #+#    #+#             */
-/*   Updated: 2024/12/28 10:45:20 by bessabri         ###   ########.fr       */
+/*   Updated: 2024/12/28 12:00:47 by bessabri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,6 @@ size_t	ft_strlen(const char *s)
 		i++;
 	}
 	return (i);
-}
-
-char	*ft_strdup(const char *s)
-{
-	char	*d;
-	int		i;
-
-	i = 0;
-	d = malloc (sizeof(char) * (ft_strlen(s) + 1));
-	if (!d)
-	{
-		return (0);
-	}
-	while (s[i])
-	{
-		d[i] = s[i];
-		i++;
-	}
-	d[i] = '\0';
-	return (d);
 }
 
 char	*ft_strjoin(char const *s1, char const *s2)
