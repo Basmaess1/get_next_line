@@ -6,19 +6,19 @@
 /*   By: bessabri <bessabri@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/21 17:24:18 by bessabri          #+#    #+#             */
-/*   Updated: 2024/12/28 10:58:26 by bessabri         ###   ########.fr       */
+/*   Updated: 2024/12/29 11:16:02 by bessabri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*read_function(int fd, char *res)
+static char	*read_function(int fd, char *res)
 {
 	ssize_t	n;
 	char	*buffer;
 	char	*tmp;
 
-	buffer = malloc(BUFFER_SIZE + 1);
+	buffer = malloc((size_t)(BUFFER_SIZE)+1);
 	if (!buffer)
 		return (0);
 	n = 1;
@@ -27,8 +27,7 @@ char	*read_function(int fd, char *res)
 		n = read(fd, buffer, BUFFER_SIZE);
 		if (n == -1)
 		{
-			free(buffer);
-			return (NULL);
+			return (free(buffer), free(res), NULL);
 		}
 		buffer[n] = '\0';
 		tmp = ft_strjoin(res, buffer);
@@ -41,7 +40,7 @@ char	*read_function(int fd, char *res)
 	return (res);
 }
 
-char	*handle_newline(char *res)
+static char	*handle_newline(char *res)
 {
 	char	*newline;
 	int		i;
@@ -67,7 +66,7 @@ char	*handle_newline(char *res)
 	return (newline);
 }
 
-char	*achb9a(char *res)
+static char	*achb9a(char *res)
 {
 	int		i;
 	int		j;
@@ -79,7 +78,7 @@ char	*achb9a(char *res)
 	if (res[i] == '\0' || res[i + 1] == '\0')
 	{
 		free(res);
-		return (0);
+		return (NULL);
 	}
 	lib9a = malloc(ft_strlen(res) - i + 1);
 	if (!lib9a)
@@ -101,7 +100,9 @@ char	*get_next_line(int fd)
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
+	{
 		return (NULL);
+	}
 	s = read_function(fd, s);
 	if (!s || s[0] == '\0')
 	{
@@ -115,22 +116,3 @@ char	*get_next_line(int fd)
 	s = achb9a(s);
 	return (line);
 }
-
-// int main()
-// {
-//     int fd;
-//     char *res2;
-//     fd = open("file.txt",O_RDONLY);
-//     if (fd < 0)
-//     {
-//         perror("Error opening file");
-//         return 1;
-//     }
-//     while ((res2 = get_next_line(fd)) != NULL)
-//     {
-//     	printf("%s",res2);
-//         free(res2);
-//     }
-
-//     close (fd);    
-// }
